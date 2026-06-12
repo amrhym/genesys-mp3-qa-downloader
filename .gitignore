@@ -1,0 +1,7 @@
+state.json
+state.json.bad
+*.lock
+recordings/
+*.mp3
+__pycache__/
+.env
