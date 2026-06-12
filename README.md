@@ -72,7 +72,7 @@ Per conversation: one MP3 per channel (`_ch0` = one party, `_ch1` = the
 other — ideal speaker separation for AI QA) and a `metadata.json` with
 conversation start/end, participants and the file list.
 
-## Production deployment on GCP (EMA side)
+## Production deployment on GCP (third-party QA provider side)
 
 - Container: `python:3.12-slim` + this script (no dependencies).
 - **Cloud Run Job** triggered by **Cloud Scheduler** every 5–15 min.
@@ -95,10 +95,11 @@ QA volumes. API calls count toward the org's monthly fair-use pool
 
 ## Compliance notes (Germany/EU case)
 
-- Audio path: Genesys Cloud (EU region) → EMA GCP (EU region) over TLS.
-  Transcoding occurs inside Genesys Cloud, an existing approved processor.
-- No third party ever receives the audio; signed download URLs are
-  short-lived and fetched immediately.
+- Audio path: Genesys Cloud (EU region) → the QA provider's cloud
+  (EU region) over TLS. Transcoding occurs inside Genesys Cloud, an
+  existing approved processor.
+- No additional processor or converter service touches the audio; signed
+  download URLs are short-lived and fetched immediately.
 - Retention enforced by bucket lifecycle + state pruning; Genesys-side
   retention is governed separately by recording policies.
 - Rotate the OAuth client secret on a schedule; least-privilege role only.
